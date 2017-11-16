@@ -3,6 +3,12 @@
 注意下文中，步骤1和2可以同时进行，完毕后再进行第3部，最后第4步。
 
 ## 1. 下载并编译安装
+
+    # 同步下系统时间
+    yum install -y ntpdate
+    ntpdate time1.aliyun.com
+
+    # 各种依赖包
     yum install -y gcc gcc-c++ pkgconfig pcre-devel tcl-devel expat-devel openssl-devel perl-ExtUtils-MakeMaker bzip2
     yum install -y gcc gcc-c++ pkgconfig pcre-devel tcl-devel expat-devel openssl-devel bzip2
     yum install -y libcap libcap-devel hwloc hwloc-devel ncurses-devel libcurl-devel nwind libunwind-devel autoconf automake libtool
@@ -10,17 +16,22 @@
     yum install devtoolset-3-gcc* -y
     scl enable devtoolset-3 bash
     # gcc4.9 needed withc c++ 11
+
+    # 下载、解压、安装
     wget http://www-us.apache.org/dist/trafficserver/trafficserver-7.1.1.tar.bz2
     tar -jxvf trafficserver-7.1.1.tar.bz2
     cd trafficserver-7.1.1
     groupadd ats
     useradd -g ats ats
     ./configure --prefix=/ --with-user=ats --with-group=ats --enable-experimental-plugins
-    make
+    # 如果有多核的机器不要浪费
+    make -j 8
     make install
+
 ## 2. 优化系统设置
 
 ### 2.1 并发
+
     cat << 'EOT' >> /etc/sysctl.conf
     fs.file-max=655350
     net.ipv4.tcp_max_tw_buckets = 300000
@@ -79,7 +90,7 @@
 
 
 ## 3. 更新配置文件
-    
+
     cd /etc/trafficserver/
     mkdir /home/ats/cache
     chown ats.ats /home/ats/cache
@@ -292,6 +303,6 @@
     EOF
 
 ## 4. 重启生效
-    
+
     init 6
 
