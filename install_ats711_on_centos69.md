@@ -1,6 +1,6 @@
 # CentOS 6.9 + Apache Traffic Server 7.1.1 安装记录
 
-注意下文中，步骤1和2可以同时进行，完毕后再进行第3部，最后第4步。
+注意下文中，步骤1和2可以同时进行，完毕后再进行第3步，第4步可选，最后第5步。
 
 ## 1. 下载并编译安装
 
@@ -302,7 +302,25 @@
     /bin/trafficserver start
     EOF
 
-## 4. 重启生效
+## 4. 设置裸盘
+
+注意：
+
+* 下面的 `dm-2` 需要替换成你对应的设备，可以通过 `fdisk -l` 查看并找到对应的块设备
+* 另外，如果该设备或其软连接已经挂载，请修改 `/etc/fstab` 删除对应的行并补充好对应的内容后再 `mount -a` 重新挂载
+* 由于使用的是整个磁盘，所以可以不设置大小，直接上
+
+    cat << EOT > /etc/udev/rules.d/99-ats.rules
+    SUBSYSTEM=="block", KERNEL=="dm-2", MODE="0660", OWNER="ats", GROUP="ats"
+    EOT
+
+    udevadm trigger –subsystem-match=block
+
+    cat << EOT >> storage.config
+    /dev/dm-2
+    EOT
+
+## 5. 重启生效
 
     init 6
 
