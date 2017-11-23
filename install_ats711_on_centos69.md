@@ -91,9 +91,9 @@ EOF
 
 ```bash
 #清理防火墙规则
-iptables –F
+iptables -F
 #查看防火墙规则
-iptables –L
+iptables -L
 #保存防火墙配置信息
 /etc/init.d/iptables save
 ```
