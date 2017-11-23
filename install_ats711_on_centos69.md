@@ -102,7 +102,7 @@ iptables -L
 
 ```bash
 cd /etc/trafficserver/
-mkdir /home/ats/cache
+mkdir /home/ats/cache -p
 chown ats.ats /home/ats/cache
 mv storage.config{,.bak}
 cat << EOT >> storage.config
@@ -329,7 +329,7 @@ EOT
 
 udevadm trigger –subsystem-match=block
 
-cat << EOT >> storage.config
+cat << EOT > storage.config
 /dev/dm-2
 EOT
 
