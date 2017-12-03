@@ -239,7 +239,7 @@ CONFIG proxy.config.net.max_connections_active_in INT 30000
 #    https://docs.trafficserver.apache.org/records.config#ram-cache
 #    https://docs.trafficserver.apache.org/en/latest/admin-guide/files/storage.config.en.html
 ##############################################################################
-CONFIG proxy.config.cache.ram_cache.size INT 103079215104
+CONFIG proxy.config.cache.ram_cache.size INT 80G
 CONFIG proxy.config.cache.ram_cache_cutoff INT 4194304
     # https://docs.trafficserver.apache.org/records.config#proxy-config-cache-limits-http-max-alts
 CONFIG proxy.config.cache.limits.http.max_alts INT 5
