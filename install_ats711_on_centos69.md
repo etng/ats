@@ -329,7 +329,7 @@ EOT
 
 udevadm trigger –subsystem-match=block
 
-cat << EOT > storage.config
+cat << EOT > /etc/trafficserver/storage.config
 /dev/dm-2
 EOT
 
