@@ -60,15 +60,23 @@ service zabbix-server start
 echo "mysql root password is 'toor'"
 echo "mysql zabbix password is 'zabbix'"
 ```
-### PHP7 + Apache
+#### PHP7 + Apache
 ```
 rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
 sed -i "s/enabled=0/enabled=1/" /etc/yum.repos.d/remi-php70.repo
 
 yum install -y httpd php php-fpm php-cli php-pdo php-mysql php-gd php-bcmath php-xml php-mbstring php-mcrypt php-redis
 ```
+#### PHP 环境测试
+```
+cat <<EOT > /var/www/html/index.php
+<?php phpinfo();
+EOT
+service httpd restart
+```
 
-### 配置 PHP 管理界面
+
+### 配置 Zabbix PHP 管理界面
 ```
 cd /var/www/html
 ln -s /usr/share/zabbix/
@@ -95,11 +103,8 @@ $ZBX_SERVER_NAME = '';
 
 $IMAGE_FORMAT_DEFAULT = IMAGE_FORMAT_PNG;
 EOT
-service httpd start
 ```
-cat <<EOT > /var/www/html/index.php
-<?php phpinfo();
-EOT
+
 ## 管理受控服务器
 
 访问 http://45.32.202.169/zabbix/ 进入管理界面, 账号密码默认为 `Admin/zabbix`
@@ -186,6 +191,7 @@ http://45.32.202.169:3000/plugins/alexanderzobnin-zabbix-app/edit
 
 #### 欢迎界面点击数据源配置按钮
 ![欢迎界面点击数据源配置按钮](screenshots/10.grafana_welcome.png)
+
 #### 填写对应的表单
 ![数据源配置](screenshots/11.grafana_datasource_config.png)
 1.  `Name:` 随便填写，这里填 zabbix 吧
@@ -198,5 +204,6 @@ http://45.32.202.169:3000/plugins/alexanderzobnin-zabbix-app/edit
 1.  请点击 `Add` 按钮
 
 #### 导入相关的图表
+
 ![导入相关的图表](screenshots/10.grafana_import_dashboards.png)
 
