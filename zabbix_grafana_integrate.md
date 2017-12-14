@@ -74,6 +74,7 @@ cat <<EOT > /var/www/html/index.php
 EOT
 service httpd restart
 ```
+此时访问 `http://45.32.202.169/` 应该能看到 PHP 环境信息
 
 
 ### 配置 Zabbix PHP 管理界面
