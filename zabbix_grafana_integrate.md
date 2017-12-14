@@ -7,6 +7,16 @@
 ```
 yum install tmux vim git htop -y
 ```
+### 同步下时间并设置正确的时区
+
+```
+rm -rf /etc/localtime
+ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+yum install -y ntp
+ntpdate time1.aliyun.com
+date
+```
+
 ### 禁用防火墙
 
 #### iptables
