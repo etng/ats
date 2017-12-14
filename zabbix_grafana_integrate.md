@@ -8,11 +8,21 @@
 yum install tmux vim git htop -y
 ```
 ### 禁用防火墙
+
+#### iptables
 ```
 /sbin/iptables -F
 /sbin/iptables -L
 /sbin/iptables -S
 ```
+
+#### selinux
+```
+sed -i 's/SELinux=enforcing/SELinux=disabled/' /etc/sysconfig/selinux
+echo 0 > /selinux/enforce
+sestatus
+```
+
 ### 安装软件包
 
 #### MySQL
