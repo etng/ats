@@ -62,6 +62,7 @@ echo "mysql zabbix password is 'zabbix'"
 ```
 #### PHP7 + Apache
 ```
+yum install -y epel-release
 rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
 sed -i "s/enabled=0/enabled=1/" /etc/yum.repos.d/remi-php70.repo
 
@@ -173,6 +174,10 @@ tail -f /var/log/zabbix/zabbix_agentd.log
 # Grafana 整合
 ## 安装 Grafana 和相关插件
 ```
+curl -s https://packagecloud.io/install/repositories/grafana/stable/script.rpm.sh | sudo bash
+sudo yum -q makecache -y --disablerepo='*' --enablerepo='grafana_stable'
+yum install grafana -y
+
 chkconfig grafana-server on
 grafana-cli plugins install alexanderzobnin-zabbix-app
 service grafana-server restart
