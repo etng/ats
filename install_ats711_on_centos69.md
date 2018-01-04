@@ -1,6 +1,6 @@
 # CentOS 6.9 + Apache Traffic Server 7.1.1 安装记录
 
-注意下文中，步骤1和2可以同时进行，完毕后再进行第3步，第4步可选，最后第5步。
+注意下文中，步骤1和2可以同时进行，完毕后再进行第3步，第4、5步可选，最后第6步。
 
 ## 1. 下载并编译安装
 
@@ -334,8 +334,35 @@ cat << EOT > /etc/trafficserver/storage.config
 EOT
 
 ```
+## 5. https 支持
 
-## 5. 重启生效
+### 创建目录用于存放证书
+```
+mkdir -p /etc/trafficserver/certs
+chown ats.ats /etc/trafficserver/certs
+```
+
+### 在 records.config 追加配置
+```
+cat << 'EOT' >> records.config
+CONFIG proxy.config.ssl.server.cert.path STRING /etc/trafficserver/certs
+CONFIG proxy.config.ssl.server.private_key.path STRING /etc/trafficserver/certs
+EOT
+```
+### 配置证书使用规则
+
+**注意**:
+
+* 最后一行为通配符，如果没有指定证书的都会使用这一个
+* 每行的 ip 对应的是所代理的服务器的 ip，后面的两个文件路径都是相对于我们刚才的 `/etc/trafficserver/certs` 的路径
+
+```
+cat << 'EOT' >> ssl_multicert.config
+dest_ip=1.2.3.4   ssl_cert_name=hellworld.com/fullchain.pem ssl_key_name=hellworld.com/privkey.pem
+dest_ip=*   ssl_cert_name=default_site.com/fullchain.pem ssl_key_name=default_site.com/privkey.pem
+EOT
+```
+## 6. 重启生效
 
     init 6
 
