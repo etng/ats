@@ -349,8 +349,16 @@ chown ats.ats /etc/trafficserver/certs
 ### 在 records.config 追加配置
 ```
 cat << 'EOT' >> records.config
+CONFIG proxy.config.ssl.server.ticket_key.filename STRING NULL
+
 CONFIG proxy.config.ssl.server.cert.path STRING /etc/trafficserver/certs
 CONFIG proxy.config.ssl.server.private_key.path STRING /etc/trafficserver/certs
+EOT
+```
+如果需要强制使用 https，则增加如下行
+```
+cat << 'EOT' >> records.config
+CONFIG proxy.config.ssl.client.certification_level INT 2
 EOT
 ```
 ### 配置证书使用规则
@@ -362,8 +370,8 @@ EOT
 
 ```
 cat << 'EOT' >> ssl_multicert.config
-dest_ip=1.2.3.4   ssl_cert_name=hellworld.com/fullchain.pem ssl_key_name=hellworld.com/privkey.pem
-dest_ip=*   ssl_cert_name=default_site.com/fullchain.pem ssl_key_name=default_site.com/privkey.pem
+dest_ip=1.2.3.4   ssl_cert_name=best_server.crt ssl_key_name=best_server.key
+dest_ip=*   ssl_cert_name=default_site.crt ssl_key_name=default_site.key
 EOT
 ```
 ## 6. 重启生效
