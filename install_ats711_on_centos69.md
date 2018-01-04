@@ -336,6 +336,10 @@ EOT
 ```
 ## 5. https 支持
 
+## 先切换目录到配置文件目录
+```
+cd /etc/trafficserver/
+```
 ### 创建目录用于存放证书
 ```
 mkdir -p /etc/trafficserver/certs
