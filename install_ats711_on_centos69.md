@@ -14,9 +14,9 @@ yum install -y gcc gcc-c++ pkgconfig pcre-devel tcl-devel expat-devel openssl-de
 yum install -y gcc gcc-c++ pkgconfig pcre-devel tcl-devel expat-devel openssl-devel bzip2
 yum install -y libcap libcap-devel hwloc hwloc-devel ncurses-devel libcurl-devel nwind libunwind-devel autoconf automake libtool
 yum install centos-release-scl -y
-yum install devtoolset-3-gcc* -y
-scl enable devtoolset-3 bash
-# gcc4.9 needed withc c++ 11
+yum install devtoolset-6-gcc* -y
+scl enable devtoolset-6 bash
+# gcc>=4.9 needed withc c++ 11
 
 # 下载、解压、安装
 wget http://www-us.apache.org/dist/trafficserver/trafficserver-7.1.1.tar.bz2
@@ -26,7 +26,7 @@ groupadd ats
 useradd -g ats ats
 ./configure --prefix=/ --with-user=ats --with-group=ats --enable-experimental-plugins
 # 如果有多核的机器不要浪费
-make -j 8
+make -j $(nproc)
 make install
 ```
 
