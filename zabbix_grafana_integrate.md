@@ -173,15 +173,42 @@ EOT
 # 受控服务器
 
 ## 安装
+### 安装软件
+#### centos
 ```
 rpm -ivh http://repo.zabbix.com/zabbix/3.2/rhel/6/x86_64/zabbix-release-3.2-1.el6.noarch.rpm
 yum install zabbix-agent -y
+```
+#### ubuntu
+
+```
+apt-get update
+apt-get install zabbix-agent -y
+```
+### 配置
+
+```
+cp /etc/zabbix/zabbix_agentd.conf{,.bak}
 export ZABBIX_SERVER_IP=45.32.202.169
 sed -i "s/Server=.*/Server=${ZABBIX_SERVER_IP}/" /etc/zabbix/zabbix_agentd.conf
 sed -i "s/ServerActive=.*/ServerActive=${ZABBIX_SERVER_IP}/" /etc/zabbix/zabbix_agentd.conf
 sed -i "s/Hostname=Zabbix server/Hostname=hostname/" /etc/zabbix/zabbix_agentd.conf
+```
+
+### 重启服务
+
+#### centos
+
+```
 chkconfig zabbix-agent on
 service zabbix-agent restart
+```
+
+#### ubuntu
+
+```
+systemctl restart zabbix-agent.service
+systemctl status zabbix-agent.service
 ```
 
 ## 监控日志
