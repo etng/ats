@@ -10,7 +10,7 @@ yum install -y ntpdate tmux
 ntpdate time1.aliyun.com
 
 # 各种依赖包
-yum install -y gcc gcc-c++ pkgconfig pcre-devel tcl-devel expat-devel openssl-devel bzip2
+yum install -y gcc gcc-c++ pkgconfig pcre-devel tcl-devel expat-devel openssl-devel bzip2 yum-utils
 yum install -y centos-release-scl
 yum-config-manager --enable rhel-server-rhscl-7-rpms
 yum install -y devtoolset-7
