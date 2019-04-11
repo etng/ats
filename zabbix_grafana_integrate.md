@@ -187,12 +187,15 @@ apt-get install zabbix-agent -y
 ```
 ### 配置
 
+hostname 以系统配置的为准，这里设置的Hostname=xxx这种就不用了，所以注释掉了
 ```
 cp /etc/zabbix/zabbix_agentd.conf{,.bak}
 export ZABBIX_SERVER_IP=45.32.202.169
 sed -i "s/Server=.*/Server=${ZABBIX_SERVER_IP}/" /etc/zabbix/zabbix_agentd.conf
 sed -i "s/ServerActive=.*/ServerActive=${ZABBIX_SERVER_IP}/" /etc/zabbix/zabbix_agentd.conf
-sed -i "s/Hostname=Zabbix server/Hostname=hostname/" /etc/zabbix/zabbix_agentd.conf
+#sed -i "s/Hostname=Zabbix server/Hostname=hostname/" /etc/zabbix/zabbix_agentd.conf
+mkdir -p /var/run/zabbix
+chown -R zabbix:zabbix /var/run/zabbix
 ```
 
 ### 重启服务
