@@ -196,6 +196,10 @@ sed -i "s/ServerActive=.*/ServerActive=${ZABBIX_SERVER_IP}/" /etc/zabbix/zabbix_
 #sed -i "s/Hostname=Zabbix server/Hostname=hostname/" /etc/zabbix/zabbix_agentd.conf
 mkdir -p /var/run/zabbix
 chown -R zabbix:zabbix /var/run/zabbix
+cat << EOT > /usr/lib/tmpfiles.d/zabbix.conf
+d /var/run/zabbix 0711 zabbix zabbix
+EOT
+cat /usr/lib/tmpfiles.d/zabbix.conf
 ```
 
 ### 重启服务
